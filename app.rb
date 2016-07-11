@@ -1,4 +1,3 @@
-require './hangman'
 require 'sinatra'
 require 'sinatra/reloader'
 require 'shotgun'
