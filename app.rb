@@ -5,8 +5,6 @@ require 'shotgun'
 
 enable :sessions
 
-h = Hangman.new
-
 
 get '/' do
   session[:victory_condition] = false
