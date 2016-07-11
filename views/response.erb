@@ -3,10 +3,10 @@
 	<title>Hangman</title>
 </head>
 <body>
-	<div style="height: 50px;text-align: center;margin-top: 150px"> <%= @hangman_layout.inspect %> </div>
-	<p style="width:200px;margin-left:auto;margin-right:auto">Ammount of tries left: <%= @guesses_left %> </p>
+	<div style="height: 50px;text-align: center;margin-top: 150px"> <h1><%= @hangman_layout.join(" ") %> </h1> </div>
+	<p style="width:300px;margin-left:auto;margin-right:auto;text-align:center">Ammount of tries left: <%= @guesses_left %> </p>
 
-	<p style="width:200px;margin-left:auto;margin-right:auto">Your guesses:</p>
+	<p style="width:1000px;margin-left:auto;margin-right:auto;text-align:center;color:purple">Your guesses: <%= @guesses %></p>
 		
 	<form action='/guess_response' method='POST' style="width:500px;margin-left:auto;margin-right:auto;text-align:center">
 		<input type='text' name='guess' />
@@ -14,6 +14,9 @@
 	</form>
 </body>
 
-	Here was you guess: <%= @guess %>
-	<p> All of your guesses: <%= @guesses %> </p>
+	<p style="width:1000px;margin-left:auto;margin-right:auto;text-align:center">Here was your guess: <%= @guess %></p>
+
+	<form action='/' method='GET' style="text-align:center;margin-top:160px;">
+		<input type='submit' value='New Word' style="color:red;font-size:20px" />
+	</form>
 </html>

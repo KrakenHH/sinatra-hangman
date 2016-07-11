@@ -28,11 +28,16 @@ post '/guess_response' do
   compare_guess(@guess)
   @hangman_layout = session[:hangman_layout]
   redirect to '/win' if session[:victory_condition]
+  redirect to '/lose' if session[:guesses_left] == 0
   erb :response
 end
 
 get '/win' do
-  "You win!!!"
+  "You win!!! The word was #{session[:secret_word_array].join}."
+end
+
+get '/lose' do
+  "You lose!!! The word was #{session[:secret_word_array].join}."
 end
 
 
