@@ -9,11 +9,13 @@ h = Hangman.new
 
 
 get '/' do
+  session[:victory_condition] = false
   session[:guesses_left] = 15
-  session[:secret_word] = random_word_giver
-  session[:hangman_layout] = Array.new(session[:secret_word].size) { '_' }
+  session[:secret_word_array] = random_word_giver.split("")
+  session[:hangman_layout] = Array.new(session[:secret_word_array].size) { '_' }
   session[:guesses] = []
   @hangman_layout = session[:hangman_layout]
+  @secret_word = session[:secret_word_array]
   erb :welcome
 end
 
@@ -23,15 +25,33 @@ post '/guess_response' do
   session[:guesses] << params[:guess]
   @guesses = session[:guesses]
   @guess = params[:guess]
+  compare_guess(@guess)
   @hangman_layout = session[:hangman_layout]
+  redirect to '/win' if session[:victory_condition]
   erb :response
 end
 
-
-
+get '/win' do
+  "You win!!!"
+end
 
 
 helpers do
+
+  def compare_guess(guess)
+    if guess.size == 1
+      session[:secret_word_array].each_with_index do  |letter,index|
+        if guess == letter
+          session[:hangman_layout][index] = letter
+          session[:victory_condition] = true if session[:hangman_layout] == session[:secret_word_array]
+        end
+      end
+    else
+      if guess.split('') == session[:secret_word_array]
+        session[:victory_condition] = true
+      end
+    end
+  end
 
   def random_word_giver
     myFile = File.open("dict.txt", "r")
